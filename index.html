@@ -25,26 +25,51 @@
 
         header {
             text-align: center;
-            padding: 1rem 2rem; /* Reduced padding to accommodate scrolling text */
-            background: rgba(0, 0, 0, 0.3); /* Very transparent overlay for a sleek look */
+            padding: 1rem 2rem;
+            background: rgba(0, 0, 0, 0.3);
             position: relative;
             z-index: 1;
-            overflow: hidden; /* Ensures the scrolling text doesn’t overflow outside the header */
+            overflow: hidden;
         }
 
         .ticker {
-            white-space: nowrap; /* Prevents text from wrapping */
-            font-size: 2rem; /* Large, bold text for stock ticker effect */
+            white-space: nowrap;
+            font-family: 'Courier New', monospace;
+            font-size: 2.2rem;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 2px;
-            animation: scrollLeft 20s linear infinite; /* Scrolls left continuously over 20 seconds */
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); /* Shadow for readability */
+            animation: scrollLeft 30s linear infinite; /* Slower scroll at 30 seconds */
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Subtle shadow for readability */
+            display: inline-block;
+            padding: 0 100px; /* Extra padding to ensure seamless looping */
+        }
+
+        /* Style for "Trading Today" in green with up arrow */
+        .green-text {
+            color: #0f0; /* Green for "up" */
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.7), 0 0 20px rgba(0, 255, 0, 0.5); /* Glowing green effect */
+        }
+        .up-arrow::after {
+            content: " ▲"; /* Up arrow Unicode */
+            color: #0f0; /* Match green text */
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.7), 0 0 20px rgba(0, 255, 0, 0.5);
+        }
+
+        /* Style for "Reliable Trading Bot Hosting" in red with down arrow */
+        .red-text {
+            color: #f00; /* Red for "down" */
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.7), 0 0 20px rgba(255, 0, 0, 0.5); /* Glowing red effect */
+        }
+        .down-arrow::after {
+            content: " ▼"; /* Down arrow Unicode */
+            color: #f00; /* Match red text */
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.7), 0 0 20px rgba(255, 0, 0, 0.5);
         }
 
         @keyframes scrollLeft {
-            0% { transform: translateX(100%); } /* Starts off-screen to the right */
-            100% { transform: translateX(-100%); } /* Ends off-screen to the left */
+            0% { transform: translateX(0); } /* Start at the beginning, fully visible */
+            100% { transform: translateX(-50%); } /* Move halfway to ensure seamless looping with duplicates */
         }
 
         .container {
@@ -135,7 +160,7 @@
 </head>
 <body>
     <header>
-        <div class="ticker">Trading Today - Reliable Trading Bot Hosting</div>
+        <div class="ticker" id="ticker"></div>
     </header>
 
     <div class="container">
@@ -179,6 +204,21 @@
         document.getElementById('platform').addEventListener('change', function() {
             alert('You selected ' + this.value + '. Create an account to proceed.');
         });
+
+        // Ensure the ticker starts immediately on page load and duplicates content for seamless looping
+        window.onload = function() {
+            const ticker = document.getElementById('ticker');
+            const baseText = '<span class="green-text">Trading Today</span><span class="up-arrow"></span> | <span class="red-text">Reliable Trading Bot Hosting</span><span class="down-arrow"></span> | ';
+            let tickerContent = '';
+
+            // Duplicate the text 4 times to ensure a seamless, gapless loop (more repetitions for longer scroll)
+            for (let i = 0; i < 4; i++) {
+                tickerContent += baseText;
+            }
+
+            ticker.innerHTML = tickerContent;
+            ticker.style.animationPlayState = 'running'; // Explicitly start the animation
+        };
 
         // Add smooth scrolling for navigation (optional, if you add a nav later)
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
