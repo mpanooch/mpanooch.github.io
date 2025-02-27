@@ -1,49 +1,238 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TradingToday - Reliable Trading Bot Hosting</title>
-  <style>
-    /* Your existing CSS plus any additional styles for the canvas */
-    /* For example, you might add: */
-    #canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1; /* Places the canvas behind your content */
-    }
-    /* Rest of your styles... */
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TradingToday - Reliable Trading Bot Hosting</title>
+    <style>
+        /* Add the cyberpunk background styles */
+        html, body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: #000;
+            height: 100%;
+        }
+        #canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* behind other content */
+        }
+
+        /* Add TradingToday styles (from index.html) */
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #10b981;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --light-gray: #e2e8f0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: transparent; /* Make body background transparent */
+        }
+        
+        header {
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            position: relative; /* Ensure header is above the canvas */
+            z-index: 1;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative; /* Ensure content is above the canvas */
+            z-index: 1;
+        }
+        
+        /* Rest of the TradingToday styles (from index.html) */
+        /* ... (paste the rest of the CSS from index.html here) ... */
+    </style>
 </head>
 <body>
-  <!-- Canvas for the animated background -->
-  <canvas id="canvas"></canvas>
+    <!-- Cyberpunk Trading Background Canvas -->
+    <canvas id="canvas"></canvas>
 
-  <!-- Your existing content -->
-  <header>
-    <div class="container">
-      <nav>
-        <a href="#" class="logo">TradingToday</a>
-        <div class="nav-links">
-          <a href="#features">Features</a>
-          <a href="#pricing">Pricing</a>
-          <a href="#contact">Contact</a>
+    <!-- TradingToday Website Content -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">TradingToday</a>
+                <div class="nav-links">
+                    <a href="#features">Features</a>
+                    <a href="#pricing">Pricing</a>
+                    <a href="#contact">Contact</a>
+                </div>
+            </nav>
+            
+            <div class="hero">
+                <h1>Reliable Hosting for Your Trading Bots</h1>
+                <p>24/7 uptime, low latency, and high performance virtual private servers optimized for algorithmic trading</p>
+                <a href="#pricing" class="btn">View Plans</a>
+            </div>
         </div>
-      </nav>
-      <div class="hero">
-        <h1>Reliable Hosting for Your Trading Bots</h1>
-        <p>24/7 uptime, low latency, and high performance virtual private servers optimized for algorithmic trading</p>
-        <a href="#pricing" class="btn">View Plans</a>
-      </div>
-    </div>
-  </header>
-  
-  <!-- Rest of your page content... -->
+    </header>
+    
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title">Why Choose TradingToday</h2>
+            <div class="features-grid">
+                <!-- Feature cards (from index.html) -->
+                <!-- ... (paste the feature cards here) ... -->
+            </div>
+        </div>
+    </section>
+    
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <h2 class="section-title">Pricing Plans</h2>
+            <div class="pricing-grid">
+                <!-- Pricing cards (from index.html) -->
+                <!-- ... (paste the pricing cards here) ... -->
+            </div>
+        </div>
+    </section>
+    
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 class="section-title">Contact Us</h2>
+            <p>Have questions about our services? Our team is ready to help you set up the perfect environment for your trading bots.</p>
+            <a href="mailto:info@tradingbotvps.example.com" class="btn">Email Us</a>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 TradingToday. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#">Terms of Service</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">FAQ</a>
+            </div>
+        </div>
+    </footer>
 
-  <!-- Link to background animation script -->
-  <script src="background.js"></script>
+    <!-- Cyberpunk Trading Background Script -->
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // Sample stock data for dynamic tickers
+        const stocks = ['AAPL', 'GOOG', 'AMZN', 'MSFT', 'TSLA', 'FB', 'NFLX'];
+        const tickers = [];
+        for (let i = 0; i < 50; i++) {
+            tickers.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                symbol: stocks[Math.floor(Math.random() * stocks.length)],
+                price: (Math.random() * 1000).toFixed(2),
+                alpha: Math.random() * 0.5 + 0.3, // slight transparency
+                speed: 0.5 + Math.random() * 2,
+                phase: Math.random() * Math.PI * 2
+            });
+        }
+
+        // Draw a stock ticker text with a subtle glitch effect
+        function drawTicker(t) {
+            ctx.save();
+            ctx.globalAlpha = t.alpha;
+            ctx.fillStyle = '#fff';
+            ctx.font = '16px monospace';
+            // Glitch: random offset for a split second
+            const glitchOffset = 1 * (Math.random() - 0.5);
+            ctx.fillText(`${t.symbol} ${t.price}`, t.x + glitchOffset, t.y + glitchOffset);
+            ctx.restore();
+        }
+
+        // Update ticker positions and simulate price fluctuations
+        function updateTickers() {
+            tickers.forEach(t => {
+                t.x += t.speed * Math.cos(t.phase) * 0.5;
+                t.y += t.speed * Math.sin(t.phase) * 0.5;
+                // Simulate price change
+                t.price = (parseFloat(t.price) + (Math.random() - 0.5) * 2).toFixed(2);
+                // Loop around screen edges
+                if (t.x > canvas.width) t.x = 0;
+                if (t.x < 0) t.x = canvas.width;
+                if (t.y > canvas.height) t.y = 0;
+                if (t.y < 0) t.y = canvas.height;
+            });
+        }
+
+        // Draw subtle circuit-like patterns as background details
+        function drawCircuitPattern() {
+            ctx.save();
+            ctx.strokeStyle = 'rgba(100, 100, 255, 0.1)';
+            ctx.lineWidth = 1;
+            for (let i = 0; i < 20; i++) {
+                ctx.beginPath();
+                ctx.moveTo(Math.random() * canvas.width, Math.random() * canvas.height);
+                ctx.lineTo(Math.random() * canvas.width, Math.random() * canvas.height);
+                ctx.stroke();
+            }
+            ctx.restore();
+        }
+
+        // Add a holographic overlay with a subtle gradient
+        function drawHolographicOverlay() {
+            const grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+            grad.addColorStop(0, 'rgba(255, 0, 255, 0.1)');
+            grad.addColorStop(0.5, 'rgba(0, 255, 255, 0.1)');
+            grad.addColorStop(1, 'rgba(255, 255, 0, 0.1)');
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+
+        // Main animation loop
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Create a subtle animated gradient background that shifts over time
+            const time = Date.now() * 0.00005;
+            const r = Math.floor(50 + 50 * Math.sin(time));
+            const b = Math.floor(50 + 50 * Math.cos(time));
+            ctx.fillStyle = `rgb(${r}, 0, ${b})`;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Render circuit patterns
+            drawCircuitPattern();
+
+            // Render stock tickers
+            tickers.forEach(t => drawTicker(t));
+            updateTickers();
+
+            // Overlay the holographic gradient
+            drawHolographicOverlay();
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script>
 </body>
 </html>
