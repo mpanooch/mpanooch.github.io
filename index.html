@@ -5,91 +5,137 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trading Today</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            background-image: url('timesquare.jpg'); /* Use the Times Square image you provided */
+            background-image: url('timesquare.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
-            margin: 0;
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             color: white;
+            line-height: 1.6;
+            overflow-x: hidden;
         }
 
         header {
             text-align: center;
-            padding: 2rem;
-            background: rgba(0, 0, 0, 0.5); /* Slightly transparent black overlay for readability */
-            margin-bottom: 2rem;
+            padding: 1rem 2rem; /* Reduced padding to accommodate scrolling text */
+            background: rgba(0, 0, 0, 0.3); /* Very transparent overlay for a sleek look */
+            position: relative;
+            z-index: 1;
+            overflow: hidden; /* Ensures the scrolling text doesn’t overflow outside the header */
         }
 
-        header h1 {
-            font-size: 3rem;
-            margin: 0;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        .ticker {
+            white-space: nowrap; /* Prevents text from wrapping */
+            font-size: 2rem; /* Large, bold text for stock ticker effect */
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            animation: scrollLeft 20s linear infinite; /* Scrolls left continuously over 20 seconds */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); /* Shadow for readability */
+        }
+
+        @keyframes scrollLeft {
+            0% { transform: translateX(100%); } /* Starts off-screen to the right */
+            100% { transform: translateX(-100%); } /* Ends off-screen to the left */
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 2rem;
-            background: rgba(0, 0, 0, 0.4); /* Even more transparent overlay */
-            border: none; /* Removed border */
-            border-radius: 0; /* Removed rounded corners */
+            padding: 4rem 2rem;
+            background: rgba(0, 0, 0, 0.2);
+            border: none;
+            position: relative;
+            z-index: 1;
         }
 
         .section {
-            margin-bottom: 2rem;
+            margin-bottom: 4rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: slideUp 1s ease-out forwards;
+        }
+
+        .section:nth-child(2) { animation-delay: 0.3s; }
+        .section:nth-child(3) { animation-delay: 0.6s; }
+        .section:nth-child(4) { animation-delay: 0.9s; }
+
+        @keyframes slideUp {
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .section h2 {
-            border: none; /* Removed border */
-            padding-bottom: 0.5rem;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6); /* Slight shadow for readability */
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         select, button {
-            padding: 0.5rem;
-            font-size: 1rem;
+            padding: 0.8rem 1.5rem;
+            font-size: 1.1rem;
             margin: 0.5rem 0;
-            background: rgba(51, 51, 51, 0.7); /* Transparent dark background for buttons and select */
+            background: rgba(255, 255, 255, 0.1);
             color: white;
-            border: none; /* Removed borders */
-            border-radius: 0; /* Removed rounded corners */
+            border: none;
+            border-radius: 0;
             cursor: pointer;
-            box-shadow: none; /* Removed any unwanted shadows */
+            transition: background 0.3s ease, transform 0.2s ease;
+            box-shadow: none;
         }
 
-        button:hover {
-            background: rgba(85, 85, 85, 0.7); /* Slightly lighter transparent background on hover */
+        select:hover, button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
         }
 
         .monitoring-windows {
             display: flex;
             gap: 2rem;
-            margin-top: 2rem;
+            margin-top: 3rem;
         }
 
         .window {
             flex: 1;
-            background: rgba(255, 255, 255, 0.1); /* Very transparent white background */
-            padding: 1rem;
-            border: none; /* Removed borders */
-            border-radius: 0; /* Removed rounded corners */
-            height: 300px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border: none;
+            border-radius: 0;
+            height: 350px;
             overflow: auto;
-            box-shadow: none; /* Removed shadows */
+            box-shadow: none;
+            backdrop-filter: blur(5px);
+            transition: transform 0.3s ease;
+        }
+
+        .window:hover {
+            transform: scale(1.02);
         }
 
         .window h3 {
-            margin-top: 0;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6); /* Slight shadow for readability */
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+        }
+
+        p {
+            margin: 0.5rem 0;
+            font-size: 1.1rem;
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>Trading Today</h1>
+        <div class="ticker">Trading Today - Reliable Trading Bot Hosting</div>
     </header>
 
     <div class="container">
@@ -118,22 +164,30 @@
                     <h3>Live Trades</h3>
                     <p>Trade 1: BTC/USD - Buy @ $50,000</p>
                     <p>Trade 2: ETH/USD - Sell @ $3,000</p>
-                    <!-- Add more trade data dynamically later -->
                 </div>
                 <div class="window">
                     <h3>Account Balance</h3>
                     <p>Current Balance: $10,500</p>
                     <p>Profit/Loss: +$150</p>
-                    <!-- Add more balance data dynamically later -->
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Simple JavaScript for interactivity (expand as needed)
+        // Simple JavaScript for interactivity
         document.getElementById('platform').addEventListener('change', function() {
             alert('You selected ' + this.value + '. Create an account to proceed.');
+        });
+
+        // Add smooth scrolling for navigation (optional, if you add a nav later)
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
         });
     </script>
 </body>
