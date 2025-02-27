@@ -6,30 +6,135 @@
     <title>Trading Today</title>
     <style>
         body {
-            background-image: url('timesquare.jpg');
-            background-size: cover; /* Makes the image cover the entire page */
-            background-position: center; /* Centers the image */
-            background-repeat: no-repeat; /* Prevents the image from repeating */
-            background-attachment: fixed; /* Keeps the background fixed while scrolling */
-            height: 100vh; /* Ensures the body takes up full viewport height */
-            margin: 0; /* Removes default margin */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white; /* Ensures text is readable over the bright background */
+            background-image: url('timesquare.jpg'); /* Use the Times Square image you provided */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: white;
         }
-        /* Optional: Add some styling for content on top of the background */
-        .content {
+
+        header {
             text-align: center;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay for readability */
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.5); /* Slightly transparent black overlay for readability */
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.4); /* Even more transparent overlay */
+            border: none; /* Removed border */
+            border-radius: 0; /* Removed rounded corners */
+        }
+
+        .section {
+            margin-bottom: 2rem;
+        }
+
+        .section h2 {
+            border: none; /* Removed border */
+            padding-bottom: 0.5rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6); /* Slight shadow for readability */
+        }
+
+        select, button {
+            padding: 0.5rem;
+            font-size: 1rem;
+            margin: 0.5rem 0;
+            background: rgba(51, 51, 51, 0.7); /* Transparent dark background for buttons and select */
+            color: white;
+            border: none; /* Removed borders */
+            border-radius: 0; /* Removed rounded corners */
+            cursor: pointer;
+            box-shadow: none; /* Removed any unwanted shadows */
+        }
+
+        button:hover {
+            background: rgba(85, 85, 85, 0.7); /* Slightly lighter transparent background on hover */
+        }
+
+        .monitoring-windows {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .window {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.1); /* Very transparent white background */
+            padding: 1rem;
+            border: none; /* Removed borders */
+            border-radius: 0; /* Removed rounded corners */
+            height: 300px;
+            overflow: auto;
+            box-shadow: none; /* Removed shadows */
+        }
+
+        .window h3 {
+            margin-top: 0;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6); /* Slight shadow for readability */
         }
     </style>
 </head>
 <body>
-    <div class="content">
-        <h1>Welcome to Trading Today</h1>
-        <p>Your premier trading resource!</p>
+    <header>
+        <h1>Trading Today</h1>
+    </header>
+
+    <div class="container">
+        <div class="section">
+            <h2>Select Your Trading Platform</h2>
+            <select id="platform">
+                <option value="binance">Binance</option>
+                <option value="coinbase">Coinbase</option>
+                <option value="kraken">Kraken</option>
+            </select>
+            <p>Create an account with the selected platform to get started.</p>
+        </div>
+
+        <div class="section">
+            <h2>Subscription Options</h2>
+            <button onclick="alert('Starting 1 free trade with $100 minimum!')">1 Free Trade ($100 Minimum)</button>
+            <p>Or choose an advanced bot option:</p>
+            <button onclick="alert('Advanced Bot 1 selected!')">Advanced Bot 1</button>
+            <button onclick="alert('Advanced Bot 2 selected!')">Advanced Bot 2</button>
+        </div>
+
+        <div class="section">
+            <h2>Monitoring Windows</h2>
+            <div class="monitoring-windows">
+                <div class="window">
+                    <h3>Live Trades</h3>
+                    <p>Trade 1: BTC/USD - Buy @ $50,000</p>
+                    <p>Trade 2: ETH/USD - Sell @ $3,000</p>
+                    <!-- Add more trade data dynamically later -->
+                </div>
+                <div class="window">
+                    <h3>Account Balance</h3>
+                    <p>Current Balance: $10,500</p>
+                    <p>Profit/Loss: +$150</p>
+                    <!-- Add more balance data dynamically later -->
+                </div>
+            </div>
+        </div>
     </div>
+
+    <script>
+        // Simple JavaScript for interactivity (expand as needed)
+        document.getElementById('platform').addEventListener('change', function() {
+            alert('You selected ' + this.value + '. Create an account to proceed.');
+        });
+    </script>
 </body>
 </html>
