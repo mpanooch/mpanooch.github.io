@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHIMERA AI - AI-Powered Trading Beyond Human Limits</title>
+    <meta name="description" content="Harness the power of high-frequency scalping and institutional-grade AI to conquer the crypto markets with CHIMERA.">
+    <meta name="keywords" content="cryptocurrency trading, AI trading, bitcoin, high-frequency scalping, automated trading, CHIMERA AI">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+    <!-- Chart.js for trading charts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-primary: #0D0D1A;
+            --bg-secondary: #1A1A2E;
+            --primary-cyan: #00F5D4;
+            --primary-magenta: #FF00A8;
+            --text-primary: #E0E0E0;
+            --text-secondary: #A0A0B0;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --card-bg: rgba(26, 26, 46, 0.6);
+            --font-body: 'Space Grotesk', sans-serif;
+            --font-heading: 'Orbitron', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-primary);
+            background-image: radial-gradient(circle at 15% 25%, rgba(0, 245, 212, 0.1), transparent 30%),
+                              radial-gradient(circle at 85% 75%, rgba(255, 0, 168, 0.1), transparent 30%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(13, 13, 26, 0.8);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+        .logo span {
+            color: var(--primary-cyan);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        .nav-menu a:hover, .nav-menu a.active {
+            color: var(--primary-cyan);
+            text-shadow: 0 0 8px rgba(0, 245, 212, 0.7);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .social-icons a {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            margin-left: 1rem;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: var(--primary-magenta);
+            transform: scale(1.1);
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            background-size: 200% auto;
+        }
+
+        .btn-gradient {
+            background-image: linear-gradient(90deg, var(--primary-cyan) 0%, var(--primary-magenta) 51%, var(--primary-cyan) 100%);
+            color: white;
+        }
+
+        .btn-gradient:hover {
+            background-position: right center;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 245, 212, 0.2);
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            padding: 6rem 2rem;
+            text-align: center;
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-image: url('https://i.imgur.com/eN8b5mD.jpg');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(13, 13, 26, 0.7);
+            backdrop-filter: blur(3px);
+        }
+
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-family: var(--font-heading);
+            font-size: 4.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            background: linear-gradient(90deg, var(--primary-cyan), var(--primary-magenta));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: pulse-glow 3s infinite alternate;
+        }
+
+        @keyframes pulse-glow {
+            from {
+                text-shadow: 0 0 10px rgba(0, 245, 212, 0.5), 0 0 20px rgba(255, 0, 168, 0.3);
+            }
+            to {
+                text-shadow: 0 0 20px rgba(0, 245, 212, 0.8), 0 0 40px rgba(255, 0, 168, 0.5);
+            }
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2.5rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary-cyan);
+            border: 2px solid var(--primary-cyan);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-cyan);
+            color: var(--bg-primary);
+            box-shadow: 0 5px 15px rgba(0, 245, 212, 0.3);
+        }
+
+        /* Live Stats Bar */
+        .live-stats {
+            background: var(--card-bg);
+            padding: 1.5rem 0;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+        }
+
+        .stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 1rem;
+            padding: 0 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-cyan);
+            font-family: var(--font-heading);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Dashboard Section */
+        .dashboard-section {
+            padding: 6rem 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 4rem;
+            color: var(--text-primary);
+            font-family: var(--font-heading);
+        }
+        .section-title span {
+            background: linear-gradient(90deg, var(--primary-cyan), var(--primary-magenta));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .dashboard-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 25px rgba(0, 245, 212, 0.2);
+            border-color: rgba(0, 245, 212, 0.5);
+        }
+
+        .card h3 {
+            color: var(--text-primary);
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            font-family: var(--font-heading);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+        .card h3 i {
+            margin-right: 10px;
+            color: var(--primary-magenta);
+        }
+
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            margin: 12px 0;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .metric:last-child {
+            border-bottom: none;
+        }
+
+        .metric-label {
+            color: var(--text-secondary);
+        }
+
+        .metric-value {
+            color: var(--primary-cyan);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .chart-container {
+            height: 300px;
+            margin-top: 20px;
+        }
+
+        .trade-log {
+            max-height: 300px;
+            overflow-y: auto;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 10px;
+        }
+
+        .trade-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px;
+            border-radius: 4px;
+            margin-bottom: 5px;
+        }
+
+        .trade-buy {
+            background-color: rgba(0, 245, 212, 0.1);
+        }
+
+        .trade-sell {
+            background-color: rgba(255, 0, 168, 0.1);
+        }
+
+        .trade-pnl {
+            font-weight: bold;
+        }
+
+        .status-active, .regime-bull {
+            color: var(--primary-cyan);
+            text-shadow: 0 0 8px rgba(0, 245, 212, 0.7);
+        }
+
+        .status-inactive, .regime-bear {
+            color: var(--primary-magenta);
+            text-shadow: 0 0 8px rgba(255, 0, 168, 0.7);
+        }
+
+        .regime-neutral {
+            color: var(--text-secondary);
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: 6rem 2rem;
+            background: var(--bg-primary);
+        }
+
+        .features-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(90deg, var(--primary-cyan), var(--primary-magenta));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .feature-card h4 {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+        }
+
+        /* Footer */
+        .footer {
+            background: #0D0D1A;
+            padding: 2rem;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer p {
+            color: var(--text-secondary);
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin-left: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-cyan);
+        }
+
+        /* Responsive */
+</style>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <a href="#" class="logo"><span>C</span>HIMERA</a>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="#" class="active">HOME</a></li>
+                    <li><a href="#dashboard">DASHBOARD</a></li>
+                    <li><a href="#features">FEATURES</a></li>
+                    <li><a href="#contact">CONTACT</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <div class="social-icons">
+                    <a href="#" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" target="_blank" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
+                    <a href="#" target="_blank" aria-label="Discord"><i class="fab fa-discord"></i></a>
+                </div>
+                <a href="#dashboard" class="btn btn-gradient">LAUNCH APP</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>AI-POWERED TRADING BEYOND HUMAN LIMITS</h1>
+            <p>Harness the power of high-frequency scalping and institutional-grade AI to conquer the crypto markets.</p>
+            <div class="cta-buttons">
+                <a href="#dashboard" class="btn btn-gradient">VIEW LIVE DASHBOARD</a>
+                <a href="#features" class="btn btn-secondary">LEARN MORE</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Stats Bar -->
+    <section class="live-stats">
+        <div class="stats-container">
+            <div class="stat-item">
+                <div id="total-pnl" class="stat-value">$0.00</div>
+                <div class="stat-label">Total PnL</div>
+            </div>
+            <div class="stat-item">
+                <div id="win-rate" class="stat-value">0%</div>
+                <div class="stat-label">Win Rate</div>
+            </div>
+            <div class="stat-item">
+                <div id="current-regime" class="stat-value">NEUTRAL</div>
+                <div class="stat-label">Market Regime</div>
+            </div>
+            <div class="stat-item">
+                <div id="system-status" class="stat-value status-inactive">OFFLINE</div>
+                <div class="stat-label">System Status</div>
+            </div>
+            <div class="stat-item">
+                <div id="system-uptime" class="stat-value">0h 0m 0s</div>
+                <div class="stat-label">Uptime</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Section -->
+    <section id="dashboard" class="dashboard-section">
+        <div class="dashboard-container">
+            <h2 class="section-title">LIVE <span>CHIMERA</span> DASHBOARD</h2>
+
+            <div class="dashboard">
+                <!-- Performance Overview -->
+                <div class="card">
+                    <h3><i class="fas fa-chart-line"></i>Performance Overview</h3>
+                    <div class="metric">
+                        <span class="metric-label">Total PnL</span>
+                        <span id="pnl-value" class="metric-value">$0.00 (0.00%)</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Win Rate</span>
+                        <span id="win-rate-value" class="metric-value">0%</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Total Trades</span>
+                        <span id="total-trades-value" class="metric-value">0</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Account Balance</span>
+                        <span id="balance-value" class="metric-value">$0.00</span>
+                    </div>
+                </div>
+
+                <!-- Market Regime Detection -->
+                <div class="card">
+                    <h3><i class="fas fa-brain"></i>Market Regime Detection</h3>
+                    <div class="metric">
+                        <span class="metric-label">Current Regime</span>
+                        <span id="regime-value" class="metric-value regime-neutral">NEUTRAL</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Confidence</span>
+                        <span id="confidence-value" class="metric-value">0%</span>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="regimeChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- PnL Chart -->
+                <div class="card">
+                    <h3><i class="fas fa-dollar-sign"></i>PnL Performance</h3>
+                    <div class="chart-container">
+                        <canvas id="pnlChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Live Market Data -->
+                <div class="card">
+                    <h3><i class="fas fa-coins"></i>Live Market Data</h3>
+                    <div class="metric">
+                        <span class="metric-label">BTC Price</span>
+                        <span id="btc-price" class="metric-value">$0.00</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">ETH Price</span>
+                        <span id="eth-price" class="metric-value">$0.00</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">SOL Price</span>
+                        <span id="sol-price" class="metric-value">$0.00</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Market Cap</span>
+                        <span id="market-cap" class="metric-value">$0T</span>
+                    </div>
+                </div>
+
+                <!-- System Stats -->
+                <div class="card">
+                    <h3><i class="fas fa-cogs"></i>System Stats</h3>
+                    <div class="metric">
+                        <span class="metric-label">Status</span>
+                        <span id="status-value" class="metric-value status-inactive">OFFLINE</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Uptime</span>
+                        <span id="uptime-value" class="metric-value">0h 0m 0s</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Last Update</span>
+                        <span id="last-update-value" class="metric-value">N/A</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">API Latency</span>
+                        <span id="api-latency" class="metric-value">0 ms</span>
+                    </div>
+                </div>
+
+                <!-- Recent Trades -->
+                <div class="card">
+                    <h3><i class="fas fa-exchange-alt"></i>Recent Trades</h3>
+                    <div id="trade-log" class="trade-log">
+                        <p>No trades yet.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+        <div class="features-container">
+            <h2 class="section-title"><span>CHIMERA</span> FEATURES</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-brain"></i></div>
+                    <h4>AI Market Regime Detection</h4>
+                    <p>Our proprietary AI analyzes market structure to identify Bullish, Bearish, or Neutral regimes, adapting its strategy in real-time.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-bolt"></i></div>
+                    <h4>High-Frequency Scalping</h4>
+                    <p>Executes rapid trades to capitalize on small price movements, maximizing profit opportunities 24/7.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h4>Advanced Risk Management</h4>
+                    <p>Features dynamic stop-loss, take-profit, and position sizing to protect your capital and secure gains.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="footer">
+        <div class="footer-container">
+            <p>&copy; 2024 CHIMERA AI. All Rights Reserved.</p>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ... existing code ...
+        const API_BASE_URL = 'https://chimera-scalper-4b4b9d49601f.herokuapp.com';
+        const UPDATE_INTERVAL = 5000;
+
+        let regimeChart, pnlChart;
+        let regimeHistory = [];
+        let pnlHistory = [];
+        let startTime = Date.now();
+        let lastUpdateTime = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initCharts();
+            fetchData();
+            setInterval(fetchData, UPDATE_INTERVAL);
+            setInterval(updateUptime, 1000);
+
+
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+
+        function initCharts() {
+            const chartOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    x: {
+                        ticks: { color: 'rgba(255, 255, 255, 0.7)' },
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                    },
+                    y: {
+                        ticks: { color: 'rgba(255, 255, 255, 0.7)' },
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' }
+                    }
+                }
+            };
+
+            // Regime Chart
+            const regimeCtx = document.getElementById('regimeChart').getContext('2d');
+            regimeChart = new Chart(regimeCtx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Confidence',
+                        data: [],
+                        borderColor: 'var(--primary-magenta)',
+                        backgroundColor: 'rgba(255, 0, 168, 0.2)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: chartOptions
+            });
+
+            // PnL Chart
+            const pnlCtx = document.getElementById('pnlChart').getContext('2d');
+            pnlChart = new Chart(pnlCtx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Total PnL',
+                        data: [],
+                        borderColor: 'var(--primary-cyan)',
+                        backgroundColor: 'rgba(0, 245, 212, 0.2)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: chartOptions
+            });
+        }
+
+        function updateUptime() {
+            const now = Date.now();
+            const uptime = Math.floor((now - startTime) / 1000);
+            const hours = Math.floor(uptime / 3600);
+            const minutes = Math.floor((uptime % 3600) / 60);
+            const seconds = uptime % 60;
+            const uptimeString = `${hours}h ${minutes}m ${seconds}s`;
+            document.getElementById('system-uptime').textContent = uptimeString;
+            document.getElementById('uptime-value').textContent = uptimeString;
+        }
+
+        async function fetchData() {
+            try {
+                const response = await fetch(`${API_BASE_URL}?action=stats`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                updateDashboard(data);
+            } catch (error) {
+                console.error("Failed to fetch data:", error);
+                // Handle error state on dashboard
+                document.getElementById('system-status').textContent = 'OFFLINE';
+                document.getElementById('system-status').className = 'stat-value status-inactive';
+                document.getElementById('status-value').textContent = 'OFFLINE';
+                document.getElementById('status-value').className = 'metric-value status-inactive';
+            }
+        }
+
+        function updateDashboard(data) {
+            if (!data || !data.performance) {
+                console.error("Received invalid data from API:", data);
+                return;
+            }
+
+            // Performance Overview
+            const pnlValue = document.getElementById('pnl-value');
+            const winRateValue = document.getElementById('win-rate-value');
+            const totalTradesValue = document.getElementById('total-trades-value');
+            const balanceValue = document.getElementById('balance-value');
+            const regimeValue = document.getElementById('regime-value');
+            const confidenceValue = document.getElementById('confidence-value');
+            const statusValue = document.getElementById('status-value');
+            const systemStatus = document.getElementById('system-status');
+
+
+            pnlValue.textContent = `$${data.performance.total_pnl.toFixed(2)} (${data.performance.pnl_percent.toFixed(2)}%)`;
+            winRateValue.textContent = `${data.performance.win_rate.toFixed(1)}%`;
+            totalTradesValue.textContent = data.performance.total_trades;
+            balanceValue.textContent = `$${data.performance.balance.toFixed(2)}`;
+
+
+            const regime = data.regime.current.toUpperCase();
+            regimeValue.textContent = regime;
+            confidenceValue.textContent = `${(data.regime.confidence * 100).toFixed(1)}%`;
+
+
+            regimeValue.className = 'metric-value';
+            if (regime.includes('BULL')) {
+                regimeValue.classList.add('regime-bull');
+            } else if (regime.includes('BEAR')) {
+                regimeValue.classList.add('regime-bear');
+            } else {
+                regimeValue.classList.add('regime-neutral');
+            }
+
+
+            const isActive = data.status === 'active';
+            statusValue.textContent = isActive ? 'ONLINE' : 'OFFLINE';
+            statusValue.className = `metric-value ${isActive ? 'status-active' : 'status-inactive'}`;
+
+            systemStatus.textContent = isActive ? 'ONLINE' : 'OFFLINE';
+            systemStatus.className = `stat-value ${isActive ? 'status-active' : 'status-inactive'}`;
+
+
+            // Live Stats Bar
+            document.getElementById('total-pnl').textContent = `$${data.performance.total_pnl.toFixed(2)}`;
+            document.getElementById('win-rate').textContent = `${data.performance.win_rate.toFixed(1)}%`;
+            document.getElementById('current-regime').textContent = regime;
+
+
+            // Market Data
+            document.getElementById('btc-price').textContent = data.market_data.BTC.price;
+            document.getElementById('eth-price').textContent = data.market_data.ETH.price;
+            document.getElementById('sol-price').textContent = data.market_data.SOL.price;
+            document.getElementById('market-cap').textContent = data.market_data.total_market_cap;
+
+
+            const now = Date.now();
+            if (lastUpdateTime) {
+                const latency = now - lastUpdateTime;
+                document.getElementById('api-latency').textContent = `${latency} ms`;
+            }
+
+            lastUpdateTime = now;
+            document.getElementById('last-update-value').textContent = new Date(data.last_updated).toLocaleTimeString();
+
+
+            const timestamp = new Date().toLocaleTimeString();
+
+
+            pnlHistory.push({ x: timestamp, y: data.performance.total_pnl });
+            if (pnlHistory.length > 20) pnlHistory.shift();
+            pnlChart.data.labels = pnlHistory.map(p => p.x);
+            pnlChart.data.datasets[0].data = pnlHistory.map(p => p.y);
+            pnlChart.update();
+
+
+            regimeHistory.push({ x: timestamp, y: data.regime.confidence * 100 });
+            if (regimeHistory.length > 20) regimeHistory.shift();
+            regimeChart.data.labels = regimeHistory.map(r => r.x);
+            regimeChart.data.datasets[0].data = regimeHistory.map(r => r.y);
+            regimeChart.update();
+
+
+            if (data.recent_trades && data.recent_trades.length > 0) {
+                updateTradeLog(data.recent_trades);
+            }
+        }
+
+        function updateTradeLog(trades) {
+            const tradeLog = document.getElementById('trade-log');
+            tradeLog.innerHTML = trades.map(trade => `
+                <div class="trade-item trade-${trade.type.toLowerCase()}">
+                    <span class="trade-info">${trade.pair} ${trade.type}</span>
+                    <span class="trade-pnl">${trade.pnl > 0 ? '+' : ''}${trade.pnl.toFixed(2)}</span>
+                    <span class="trade-time">${new Date(trade.timestamp).toLocaleTimeString()}</span>
+                </div>
+            `).join('');
+        }
+    </script>
+</body>
+</html>
+                    <span class="trade-time">${new Date(trade.timestamp).toLocaleTimeString()}</span>
+                </div>
+            `).join('');
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Initialize dashboard and charts after DOM content loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            initCharts();
+            fetchData();
+            setInterval(fetchData, UPDATE_INTERVAL);
+            setInterval(updateUptime, 1000);
+        });
+    </script>
+</body>
+</html>
