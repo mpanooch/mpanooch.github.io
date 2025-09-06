@@ -478,6 +478,8 @@
         }
 
         /* Responsive */
+</style>
+
 <body>
     <!-- Header -->
     <header class="header">
@@ -900,86 +902,6 @@
                 </div>
             `).join('');
         }
-    </script>
-</body>
-                    
-                    if (regimeChart.data.labels.length > 50) {
-                        regimeChart.data.labels.shift();
-                        regimeChart.data.datasets[0].data.shift();
-                    }
-                    
-                    regimeChart.update('none');
-                }
-            }
-
-            // Market data
-            if (data.market) {
-                const btcPrice = data.market.BTCUSDT || 0;
-                const ethPrice = data.market.ETHUSDT || 0;
-                const solPrice = data.market.SOLUSDT || 0;
-                
-                document.getElementById('btc-price').textContent = `$${btcPrice.toFixed(2)}`;
-                document.getElementById('eth-price').textContent = `$${ethPrice.toFixed(2)}`;
-                document.getElementById('sol-price').textContent = `$${solPrice.toFixed(2)}`;
-                
-                // Update live stats bar
-                document.getElementById('live-btc-price').textContent = `$${btcPrice.toFixed(0)}`;
-                document.getElementById('live-eth-price').textContent = `$${ethPrice.toFixed(0)}`;
-                document.getElementById('live-sol-price').textContent = `$${solPrice.toFixed(0)}`;
-            }
-
-            // System stats
-            if (data.system) {
-                document.getElementById('processing-speed').textContent = `${data.system.processing_speed || 0} ticks/sec`;
-                document.getElementById('total-ticks').textContent = data.system.total_ticks || 0;
-                document.getElementById('signals-generated').textContent = data.system.signals_generated || 0;
-                document.getElementById('model-accuracy').textContent = `${(data.system.model_accuracy || 0).toFixed(1)}%`;
-                document.getElementById('data-points').textContent = data.system.total_ticks || 0;
-            }
-
-            // Recent trades
-            if (data.recent_trades && data.recent_trades.length > 0) {
-                updateTradeLog(data.recent_trades);
-            }
-
-            // Update PnL chart
-            if (data.performance && data.performance.pnl_percent !== undefined) {
-                const now = new Date().toLocaleTimeString();
-                pnlChart.data.labels.push(now);
-                pnlChart.data.datasets[0].data.push(data.performance.pnl_percent);
-                
-                if (pnlChart.data.labels.length > 50) {
-                    pnlChart.data.labels.shift();
-                    pnlChart.data.datasets[0].data.shift();
-                }
-                
-                pnlChart.update('none');
-            }
-        }
-
-        // Update trade log
-        function updateTradeLog(trades) {
-            const tradeLog = document.getElementById('trade-log');
-            tradeLog.innerHTML = '';
-            
-            trades.slice(0, 20).forEach(trade => {
-                const logEntry = document.createElement('div');
-                logEntry.className = `log-entry log-${trade.action?.toLowerCase() || 'unknown'}`;
-                
-                const timestamp = new Date(trade.timestamp).toLocaleTimeString();
-                logEntry.innerHTML = `
-                    [${timestamp}] ${trade.symbol}: ${trade.action} at $${(trade.price || 0).toFixed(2)}
-                    (${trade.regime || 'UNKNOWN'} - ${((trade.confidence || 0) * 100).toFixed(1)}%)
-                    ${trade.pnl_pct ? `PnL: ${trade.pnl_pct > 0 ? '+' : ''}${trade.pnl_pct.toFixed(2)}%` : ''}
-                `;
-                
-                if (trade.pnl_pct) {
-                    logEntry.classList.add(trade.pnl_pct > 0 ? 'log-profit' : 'log-loss');
-                }
-                
-                tradeLog.appendChild(logEntry);
-            });
-        }
 
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -995,14 +917,12 @@
             });
         });
 
-        // Initialize dashboard
+        // Initialize dashboard and charts after DOM content loaded
         document.addEventListener('DOMContentLoaded', () => {
             initCharts();
-            setInterval(updateUptime, 1000);
-            
-            // Start fetching data
             fetchData();
             setInterval(fetchData, UPDATE_INTERVAL);
+            setInterval(updateUptime, 1000);
         });
     </script>
 </body>
